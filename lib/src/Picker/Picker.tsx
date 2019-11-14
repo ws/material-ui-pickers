@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Calendar from '../views/Calendar/Calendar';
 import { useUtils } from '../_shared/hooks/useUtils';
 import { useViews } from '../_shared/hooks/useViews';
-import { ClockView } from '../views/Clock/ClockView';
+import { TimeView } from '../views/Time/TimeView';
 import { makeStyles } from '@material-ui/core/styles';
 import { YearSelection } from '../views/Year/YearView';
 import { BasePickerProps } from '../typings/BasePicker';
@@ -19,9 +19,9 @@ const viewsMap = {
   year: YearSelection,
   month: MonthSelection,
   date: Calendar,
-  hours: ClockView,
-  minutes: ClockView,
-  seconds: ClockView,
+  hours: TimeView,
+  minutes: TimeView,
+  seconds: TimeView,
 };
 
 export type PickerView = keyof typeof viewsMap;
@@ -68,7 +68,6 @@ const useStyles = makeStyles(
     },
     pickerView: {
       overflowX: 'hidden',
-      minHeight: VIEW_HEIGHT,
       minWidth: DIALOG_WIDTH,
       maxWidth: DIALOG_WIDTH_WIDER,
       display: 'flex',
@@ -152,14 +151,7 @@ export const Picker: React.FunctionComponent<PickerProps> = ({
         )}
 
         {(openView === 'hours' || openView === 'minutes' || openView === 'seconds') && (
-          <ClockView
-            {...rest}
-            date={date}
-            type={openView}
-            onHourChange={handleChangeAndOpenNext}
-            onMinutesChange={handleChangeAndOpenNext}
-            onSecondsChange={handleChangeAndOpenNext}
-          />
+          <TimeView {...rest} date={date} onChange={handleChangeAndOpenNext} />
         )}
       </div>
     </div>
